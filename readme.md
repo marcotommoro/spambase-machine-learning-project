@@ -9,23 +9,29 @@ There are 2 main files (both ipynb and py):
 - eda (exploration)
 - model (classification)
 
-## API
+# API
 
-#### If you want to test the model prediction:
+### If you want to test the model prediction:
 
-you have to clone the repo and install requirements.txt
+- ### <b>ONLINE:</b>
 
-> pip **install** -r **requirements**.txt
+  - visit https://spambase.fly.dev/docs#/default/read_root__get and insert the email to been tested
 
-or
+- ### <b>OFFLINE</b>
 
-if you use **pipenv**, simply
+  You have to clone the repo and install requirements.txt
 
-> pipenv install
+  > pip **install** -r **requirements**.txt
 
-Then start the **server** :
+  or
 
-> uvicorn main:app --reload
+  if you use **pipenv**, simply
 
-Next, open the browser at
-http://127.0.0.1:8000/docs#/default/read_root__get
+  > pipenv install
+
+  Then start the **server** :
+
+  > uvicorn main:app --reload
+
+  Next, open the browser at
+  http://127.0.0.1:8000/docs#/default/read_root__get

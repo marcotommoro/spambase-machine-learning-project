@@ -15,12 +15,12 @@ import re
 app = FastAPI()
 
 columns = []
-with open("../data/columns.txt", "r") as doc:
+with open("data/columns.txt", "r") as doc:
     lines = doc.readlines()
     for line in lines:
         columns.append(line.split(":")[0])
 
-df = panda.read_csv("../data/spambase.data", header=None)
+df = panda.read_csv("data/spambase.data", header=None)
 
 y = df[np.shape(df)[1] - 1]  # class column
 x = df.drop([np.shape(df)[1] - 1], axis=1)  # remove class column
@@ -36,7 +36,6 @@ def predict(email):
     v = panda.DataFrame([v])
     y_predicted = model.predict(v)
     print(y_predicted)
-    print("ciaoooo")
     return y_predicted
 
 
