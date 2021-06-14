@@ -11,16 +11,16 @@ There are 2 main files (both ipynb and py):
 
 # API
 
-### If you want to test the model prediction:
+### To test the model prediction:
 
 - ### <b>ONLINE:</b>
 
-  - visit https://spambase.fly.dev/docs#/default/read_root__get and insert the email to been tested
+  - visit **https://spambase.fly.dev/docs#/default/read_root__get** and insert the email to been tested
     <br/><br/>
 
 - ### <b>OFFLINE</b>
 
-  You have to clone the repo and install requirements.txt
+  Clone the repo and install requirements.txt
 
   > pip **install** -r **requirements**.txt
 
@@ -35,4 +35,4 @@ There are 2 main files (both ipynb and py):
   > uvicorn main:app --reload
 
   Next, open the browser at
-  http://127.0.0.1:8000/docs#/default/read_root__get
+  **http://127.0.0.1:8000/docs#/default/read_root__get**
