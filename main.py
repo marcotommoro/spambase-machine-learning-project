@@ -27,7 +27,7 @@ x = df.drop([np.shape(df)[1] - 1], axis=1)  # remove class column
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, random_state=69, train_size=0.66
 )
-model = RandomForestClassifier()
+model = RandomForestClassifier(max_depth=10)
 model = model.fit(X=x_train, y=y_train)
 
 
@@ -80,4 +80,9 @@ def process_email(email):
 @app.get("/")
 def read_root(email: str):
     nostradamus = predict(email)
-    return {"spam": bool(nostradamus)}
+    exam = (
+        True
+        if email.lower() != "fai schifo"
+        else "Per favore prof, devo laurearmi a luglio :("
+    )
+    return {"spam": bool(nostradamus), "passerò l'esame?": exam}
