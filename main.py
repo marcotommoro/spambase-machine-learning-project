@@ -81,8 +81,8 @@ def process_email(email):
 def read_root(email: str):
     nostradamus = predict(email)
     exam = (
-        True
-        if email.lower() != "fai schifo"
+        "Spero... :)"
+        if email.lower() != "no fai schifo"
         else "Per favore prof, devo laurearmi a luglio :("
     )
     return {"spam": bool(nostradamus), "passerò l'esame?": exam}

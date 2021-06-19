@@ -10,6 +10,7 @@ pandas = "*"
 numpy = "*"
 matplotlib = "*"
 sklearn = "*"
+tabulate = "*"
 
 [dev-packages]
 
