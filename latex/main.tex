@@ -15,7 +15,6 @@
 
 % Graphics
 \usepackage{caption}
-\usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{float}
@@ -30,9 +29,13 @@
 \usepackage{array}
 \usepackage{lipsum}
 \usepackage{hyperref}
+\usepackage{multicol}
 
 \renewcommand{\contentsname}{Indice}
 \renewcommand\refname{Bibliografia}
+\hypersetup{%
+    pdfborder = {0 0 0}
+}
 
 \begin{document}
 \title{Spambase\\
@@ -70,48 +73,48 @@ Gli spammers inviano le mail pubblicitarie o truffaldine a migliaia di indirizzi
     \item automaticamente indirizzi mail da pagine personali, blog, forum o newsgroup;
 \end{itemize}
 \begin{itemize}
-    \item usano appositi software che costruiscono gli indirizzi di mail usando nomi e cognomi comuni;
+    \item usando appositi software che costruiscono gli indirizzi di mail usando nomi e cognomi comuni;
 \end{itemize}
 \begin{itemize}
-    \item pubblicano falsi siti web che catturano il tuo indirizzo, promettendo vantaggi e offerte mirabolanti;
+    \item pubblicando falsi siti web che catturano indirizzi, promettendo vantaggi e offerte mirabolanti;
 \end{itemize}
 \begin{itemize}
-    \item acquistano indirizzi mail da altri spammers.
+    \item acquistando indirizzi mail da altri spammers.
 \end{itemize}
 
 Sorgono sempre più spesso notizie di grandi aziende, che per colpa di un dipendente non abbastanza istruito sul comportamento coretto da adottare di fronte ad una email non sicura, si ritrovano a dover sborsare migliaia di dollari da pagare in cryptovalute.
 
-Motivo per il quale negli ultimi anni sempre più persone si stanno istruendo, e stanno istruendo gli altri sull'identificare 'a vista d'occhio' una mail spam, o comunque una mail sospetta. 
+Motivo per il quale negli ultimi anni sempre più persone si stanno istruendo, e stanno istruendo gli altri sull'identificare 'a vista d'occhio' una mail spam, o comunque una mail sospetta.
 \break
 I vari servizi anti-spam che mettono a disposizione i diversi provider di mail (come Gmail, Outlook, Protonmail, Tutanota, Yahoo,...) il più delle volte non sono sufficienti a fermare i criminali che si nascondono dietro una banalissima ed innoqua email inviata dal 'cuggino di 4º grado con un patrimonio milionario bloccato alle isole mauritius'.
 
 \clearpage
 \section{Analisi dei dati}
-In statistica, l'analisi esplorativa del dati è un approccio di analisi del set di dati per riassumere le loro caratteristiche principali, spesso usando grafici statistici e altri metodi di visualizzazione dei dati. Un modello statistico può essere usato o meno, ma principalmente l'EDA serve a vedere cosa i dati possono dirci al di là della modellazione formale o del test di ipotesi. L'EDA è diversa dall'analisi iniziale dei dati (IDA), che si concentra più strettamente sulla verifica delle ipotesi richieste per l'adattamento del modello e la verifica delle ipotesi, e sulla gestione dei valori mancanti e sulle trasformazioni delle variabili secondo necessità. 
+In statistica, l'analisi esplorativa del dati (EDA - exploratory data analysis) è un approccio di analisi del set di dati per riassumere le loro caratteristiche principali, spesso usando grafici statistici e altri metodi di visualizzazione dei dati. Un modello statistico può essere usato o meno, ma principalmente l'EDA serve a vedere 'cosa i dati possono dirci'.L'EDA è diversa dall'analisi iniziale dei dati (IDA), che si concentra più strettamente sulla verifica delle ipotesi richieste per l'adattamento del modello e la verifica delle ipotesi, e sulla gestione dei valori mancanti e sulle trasformazioni delle variabili secondo necessità.
 
 \subsection{Strumenti utilizzati}
-Per questo lavoro ho trovato necessario l'utilizzo di alcune librerie, fondamentali per l'analisi dei dati e per semplificare il lavoro dell'analista:
+Per questo lavoro ho trovato necessario l'utilizzo di alcune librerie open-source, fondamentali per l'analisi dei dati e per semplificare il lavoro dell'analista:
 \begin{itemize}
-    \item \textbf{pandas}: potente e veloce libreria open-source nata per analizzare e manipolare i dati in input, il suo nome deriva dal gioco di parole "python data analysis";
+    \item \textbf{pandas}: potente e veloce libreria nata per analizzare e manipolare i dati in input, il suo nome deriva dal gioco di parole "python data analysis";
 \end{itemize}
 
 \begin{itemize}
-    \item \textbf{pyplot}: sottolibreria open-source di matpolotlib che rende possibile la creazione di grafici, figure e linee, e permette inoltre di poter cambiare colori, forma e dimensioni.
+    \item \textbf{pyplot}: sottolibreria di matpolotlib che rende possibile la creazione di grafici, figure e linee, e permette inoltre di poter cambiare colori, forma e dimensioni.
 \end{itemize}
 \begin{itemize}
-    \item \textbf{sklearn}: è una libreria open source di apprendimento automatico che contiene al suo interno algoritmi di ogni tipo;
+    \item \textbf{sklearn}: è una libreria di apprendimento automatico che contiene al suo interno algoritmi di ogni tipo;
 \end{itemize}
 \begin{itemize}
-    \item \textbf{seaborn}: libreria open-source basata su  matpolotlib, che come pyplot permette la creazione di grafici;
+    \item \textbf{seaborn}: libreria basata su  matpolotlib, che come pyplot permette la creazione di grafici;
 \end{itemize}
 
 \begin{itemize}
-    \item \textbf{numpy}: libreria open-source basata su python e c++ fondamentale per lavorare con array di grandi dimensioni. A differenza delle liste di python, numpy salva i dati in memoria in maniera contigua, l'accesso, incrementando notevolmente le performance, stimate al 5000\%;
+    \item \textbf{numpy}: libreria basata su python e c++ fondamentale per lavorare con array di grandi dimensioni. A differenza delle liste di python, numpy salva i dati in memoria in maniera contigua, l'accesso, incrementando notevolmente le performance, stimate al 5000\%;
     \begin{figure}[h]
-        \includegraphics[width=1\columnwidth]{numpy_vs_list.png}
+        \includegraphics[width=1\linewidth]{numpy_vs_list.png}
         \caption{}
     \end{figure}
-   
+
 \end{itemize}
 
 \clearpage
@@ -128,8 +131,8 @@ Un'altra funzione utile è \textit{\textbf{pandas.describe()}} che per ogni colo
     \includegraphics[width=1\columnwidth]{pandas_describe.png}
     \caption{}
 \end{figure}
-
-Il dataset spambase in questione non è perfettamente bilanciato, difatti le classi spam e non spam corrispondono rispettivamente al 39.4\% e 60.6\% dei samples raccolti.
+Il dataset è composto da 4601 istanze di email e 57 attributi rappresentati da un numero reale e un attributo classe rappresentato da un booleano che indica appunto se il sample è uno spam (1) o non spam (0).
+Il dataset spambase in questione non è bilanciato, difatti le classi spam e non spam corrispondono rispettivamente al 39.4\% e 60.6\% dei samples raccolti.
 
 \subsection{Correlazione}
 La matrice di correlazione è una tabella che mostra come gli attributi  siano effettivamente legati tra loro. Quando due attributi sono tra di loro correlati, al crescere dell’uno cresce anche l’altro.
@@ -141,13 +144,13 @@ Il coefficiente di correlazione è un numero, compreso tra -1 e + 1 che esprime 
 \item == -1: i due attributi sono perfettamente decorrelati con una curva inversamente proporzionale, al crescere del primo il secondo decresce;
 \item == 0: i due attributi sono indipendenti l'uno dall'altro.
 \end{itemize}
- Si può notare dal grafico (fig.4) che la diagonale è composta da tutti 1, dato che un attributo messo in relazione con se stesso seguirà la stessa curva.
-\begin{figure}[h]
+ Si può notare dal grafico in figura 4 che la diagonale è composta da tutti 1, dato che un attributo messo in relazione con se stesso seguirà la stessa curva.
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.5]{correlation_top_15.png}
     \caption{}
 \end{figure}
-Il grafico di correlazione (fig. 4) riesce a mettere in evidenza gli attributi più collegati con la classe (spam o non spam). In ordine, si notano le parole "your", "0000", "remove", "\$", "you", "free", "business", "hp", "capital\_run\_lenght\_total" (numero di lettere maiuscole), "our", "!", "receive", "hpl", "over".
+Il grafico di correlazione riesce a mettere in evidenza gli attributi più collegati con la classe (spam o non spam). In ordine, si notano le parole "your", "0000", "remove", "\$", "you", "free", "business", "hp", "capital\_run\_lenght\_total" (numero di lettere maiuscole), "our", "!", "receive", "hpl", "over".
 
 Raffigurati ci sono i primi 15 attributi più collegati alla classe spam, anche se non si nota una stretta coerelazione, dato che i valori si muovono tra 0.23 e 0.38.
 
@@ -157,7 +160,7 @@ Si va quindi a restringere il campo per analizzare, sempre graficamente, la corr
     \includegraphics[width=1\columnwidth]{correlation_pair_top_6.png}
     \caption{}
 \end{figure}
-
+\clearpage
 \subsection{Comparazione parole}
 In questa sezione si andranno ad analizzare quali saranno le parole effettive da tenere maggiormente in considerazione tramite 3 grafici esplicativi.
 
@@ -167,11 +170,11 @@ Il grafico in figura 6 rappresenta la percentuale della frequenza di ogni singol
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.7\linewidth]{top_10_only_spam.png}
+    \includegraphics[width=.8\linewidth]{top_10_only_spam.png}
     \caption{}
 \end{figure}
-Per eseguire un'analisi più scrupolosa si va invece a calcolare la differenza delle frequenze tra le email non spam e le email spam. 
-Per fare ciò è prima necessario creare una tabella pivot che calcoli, per entrambe le classi, la media di attributo, restituendo una tabella (fig. 7) che abbia sulle ascisse le parole chiave e sulle ordinate la classe di appartenenza; i valori corrispondenti saranno la media delle frequenze della parola X nella classe di appartenenza Y.
+Per eseguire un'analisi più scrupolosa si va invece a calcolare la differenza delle frequenze tra le email non spam e le email spam.
+Per fare ciò è prima necessario creare una tabella pivot che calcoli, per entrambe le classi, la media di attributo, restituendo una tabella (figura 7) che abbia sulle ascisse le parole chiave e sulle ordinate la classe di appartenenza; i valori corrispondenti saranno la media delle frequenze della parola X nella rispettiva classe di appartenenza Y.
 \begin{figure}[H]
     \includegraphics[width=1\linewidth]{pivot.png}
     \caption{}
@@ -183,12 +186,12 @@ Una volta calcolata la tabella pivot si notano immediatamente, dal grafico in fi
     \item y \textgreater \!  0: la parola è maggiormente presente nelle email non spam.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \includegraphics[width=1\columnwidth]{df_difference_barplot.png}
     \caption{}
 \end{figure}
 
-Spiccano all'occhio, quindi, che le parole "you" e "your" sono nettamente più frequenti nelle email spam, mentre le parole come "george" e "hp" sono maggiormente più frequenti nelle email vere. Questo perchè spesso, il malintenzionato che spedisce la mail malevola, non conosce il nome delle proprie vittime e li si rivolge a loro con il pronome "you" ("tu", in inglese), piuttosto che con il loro vero nome.
+Spiccano all'occhio, quindi, che le parole "you" e "your" sono nettamente più frequenti nelle email spam, mentre le parole come "george" e "hp" sono maggiormente più frequenti nelle email vere. Questo perchè spesso, il malintenzionato che spedisce la mail malevola, non conosce il nome delle proprie vittime e si rivolge a loro con il pronome "you" ("tu", in inglese), piuttosto che con il loro vero nome.
 \subsection{Lettere maiuscole}
 Nel dataset, oltre alla frequenza delle singole parole, sono presenti tre campi aggiuntivi:
 \begin{itemize}
@@ -197,12 +200,12 @@ Nel dataset, oltre alla frequenza delle singole parole, sono presenti tre campi 
     \item capital\_run\_length\_total: indica la somma totale delle lettere maiuscole.
 \end{itemize}
 
-Analizzando questi tre fattori presenti all'interno della email, si deduce, leggendo il grafico a figura 9 con le stesse valutazioni del grafico a figura 8, che nelle email spam è nettamente maggiore il numero di lettere maiuscole inserite nelle email spam.
+Analizzando questi tre fattori presenti all'interno della email, si deduce, leggendo il grafico a figura 9 con le stesse valutazioni del grafico a figura 8, che nelle email spam è nettamente maggiore il numero di lettere maiuscole inserite, che nelle email non spam.
 Il malintenzionato preferisce, quindi, utilizzare le lettere maiuscole per carpire l'attenzione della vittima.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.4\columnwidth]{capital_plot.png}
+    \includegraphics[width=.9\columnwidth]{capital_plot.png}
     \caption{}
 \end{figure}
 \clearpage
@@ -214,7 +217,7 @@ Il problema in questione fa chiaramente riferimento ad un modello di classificaz
     \item 0: non spam;
     \item 1: spam.
 \end{itemize}
-Per questo progetto ho selezionato, tra gli algoritmi svoluti durante le lezioni, tre che ho reputato più adatti per il riconoscimento, che si andranno ad esaminare più approfonditamente nella prossima sezione:
+Per questo progetto ho selezionato, tra gli algoritmi svolti durante le lezioni, tre che ho reputato più adatti per il riconoscimento, che si andranno ad esaminare più approfonditamente nelle prossime sezioni:
 \begin{itemize}
     \item K-Nearest Neighbors;
     \item Alberi decisionali;
@@ -239,9 +242,8 @@ Questo algoritmo, quindi descrive la similarità tra i diversi sample, in base a
 \end{itemize}
 
 La scelta del valore k può quindi rovesciare la previsione dell'intero algoritmo. Solitamente k è un numero non molto grande, e per una classificazione binaria è preferibile un k dispari, per evitare di ritrovarsi in situazioni di parità (3 quadrati blu e 3 triangoli rossi). \hfill \break
-Per questo progetto si è scelto un k=11 per rendere la previsione più stabile ed accurata.
 
-Questo tipo di algoritmo, purtroppo, è molto influenzato dall'uniformità dei dati ed il dataset preso in considerazione non è bilanciato (60\% non spam e 40\% spam), per ciò per il seguente algoritmo i parametri scelti per ottimizzare al massimo l'algoritmo sono stati:
+Questo tipo di algoritmo è molto influenzato dall'uniformità dei dati ed il dataset preso in considerazione non è bilanciato (60\% non spam e 40\% spam), per ciò per il seguente algoritmo i parametri scelti per ottimizzare al massimo l'algoritmo sono stati:
 \begin{itemize}
     \item \textbf{weight} = "distance": nell'esempio di prima dei triangoli, ogni elemento aveva lo stesso peso nella conta; utilizzando questo parametro, gli elementi più vicni alla pallina verde avranno un peso maggiore, mentre quelli più distanti avranno un peso minore;
     \item \textbf{k = 14}: nonostante si tratti di una classificazione binaria, utilizzando la distanza pesata, perde di senso utilizzare per forza un numero dispari per evitare di imbattersi in condizioni di parità.
@@ -250,14 +252,14 @@ Questo tipo di algoritmo, purtroppo, è molto influenzato dall'uniformità dei d
 \subsection{Alberi  decisionali}
 Con alberi decisionali s'intende l'implementazione degli alberi binari, composti da:
 \begin{itemize}
-    \item nodi: funzioni condizionali booleane che testano il valore dello specifico attributo;
-    \item rami: collegamenti tra i nodi, che rappresentano il risultato della condizione;
-    \item foglie: una sottoclasse dei nodi, rappresentano il risultato finale della previsione di classificazione.
+    \item \textbf{nodi}: funzioni condizionali booleane che testano il valore dello specifico attributo;
+    \item \textbf{rami}: collegamenti tra i nodi, rappresentano il risultato della condizione;
+    \item \textbf{foglie}: una sottoclasse dei nodi, rappresentano il risultato finale della previsione di classificazione.
 \end{itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.4]{decision_tree.png}
+    \includegraphics[width=.5\columnwidth]{decision_tree.png}
     \caption{}
 \end{figure}
 Una regola di suddivione è necessaria per decidere quale (o quali) variabile deve essere utilizzata nella condizione di un nodo per dividere il set di dati in sttogruppi, e soprattutto quale soglia utilizzare sulle variabili. Il metodo con cui vengono effettuate queste suddivisioni è basato sull'impurità dei nodi.
@@ -278,13 +280,13 @@ Per il seguente algoritmo i parametri scelti per ottimizzare al massimo l'algori
 
 Di default non c'è un limite alla profondità massima che un albero può raggiungere, ma così facendo, si rende la previsione soggetta ad \textit{overfitting}.
 
-L'\textit{overfitting} è una condizione nella quale il modello creato si adatta perfettamente ai sample con cui ha eseguito l'allenamento (chiamati appunto train\_data), ma non riesce poi ad adattarsi nello stesso modo con nuovi sample.
+L'\textit{overfitting} è una condizione nella quale il modello creato si adatta perfettamente ai sample con cui ha eseguito "l'allenamento" cioè con quali istanze di email ha creato l'albero; ma non riesce poi ad adattarsi nello stesso modo con nuovi sample.
 Di norma, più si incrementa il numero massimo di profondità, più l'albero diventa complesso e più specifico a determinate condizioni, di conseguenza meno flessibile ed adattabile, soggetto quindi ad overfitting.
 
-Può verificarsi anche la situazione opposta dove si imposta un numero massimo di livelli troppo basso, così da non lasciare possibilità al modello di creare le condizioni minime per classificare i sample e generalizzando troppo il risultato. Questa condizione specifica prende il nome di \textit{underfitting}. 
+Può verificarsi anche la situazione opposta dove si imposta un numero massimo di livelli troppo basso, così da non lasciare possibilità al modello di creare le condizioni minime per classificare i sample e generalizzando troppo il risultato. Questa condizione specifica prende il nome di \textit{underfitting}.
 
 \subsection{Support Vector Machine}
-Le macchine a vettori di supporto sono dei modelli di apprendimento supervisionato con l'obiettivo di identificare l'interpiano linerare che meglio divide i sample in classi. In caso di classificazione con due sole dimensioni spaziali (x, y) l'iperpiano si riduce ad una riga, mentre a tre dimensioni viene rappresentato da un piano a tutti gli effetti (figura 12), invece con più di tre dimensioni viene appunto definito \textit{iperpiano}.
+Le macchine a vettori di supporto sono dei modelli di apprendimento supervisionato con l'obiettivo di identificare l'iperpiano linerare che meglio divide i sample in classi. In caso di classificazione con due sole dimensioni spaziali (x, y) l'iperpiano si riduce ad una riga, mentre a tre dimensioni viene rappresentato da un piano a tutti gli effetti, invece con più di tre dimensioni viene appunto definito \textit{iperpiano}.
 
 Si definiscono
 \begin{itemize}
@@ -292,26 +294,32 @@ Si definiscono
     \item margine: distanza tra i due vettori di supporto (di due classi differenti) più vicini all'iperpiano.
 \end{itemize}
 
-
-\begin{figure}[!htb]
-   \begin{minipage}{0.48\textwidth}
-     \centering
-     \includegraphics[width=.9\linewidth]{svc.png}
-     \caption{}
-   \end{minipage}\hfill
-   \begin{minipage}{0.48\textwidth}
-     \centering
-     \includegraphics[width=.9\linewidth]{svc_margin.png}
-     \caption{}
-   \end{minipage}
+\begin{figure}[H]
+    \centering
+    \subfigure[]{\includegraphics[width=0.48\linewidth]{svc.png}}
+    \subfigure[]{\includegraphics[width=0.48\linewidth]{svc_margin.png}}
+    \caption{}
 \end{figure}
+
+
 
 L'algoritmo quindi disegna un numero n di linee per separare le palline blu da quelle verdi e calcola quale tra queste risulta ottimale per la separazione delle due classi.
 
-Per modelli più complessi è necessario poter utilizzare, oltre che a linee rette, anche curve e regioni complesse nello spazio.
-Questo viene fatto attraverso un \textit{kernel}, cioè una funzione che sposta i dati da un piano a bassa dimensione in uno spazio e dimensione superiore dove è possibile separarli tramite un piano.
+\begin{multicols}{2}[\columnsep2em]
+    Per modelli più complessi è necessario poter utilizzare, oltre che a linee rette, anche curve e regioni complesse nello spazio.
+    Questo viene fatto attraverso un \textit{kernel}, cioè una funzione che sposta i dati da un piano a bassa dimensione in uno spazio e dimensione superiore dove è possibile separarli tramite un piano.
 
-Per questo algoritmo si è scelto di utilizzare un kernel \textbf{RBF} (radial basis function) che permette di creare regioni complesse nello spazio delle features.
+    Per questo algoritmo si è scelto di utilizzare un kernel \textbf{RBF} (radial basis function) che permette di creare regioni complesse nello spazio delle features.
+    \columnbreak
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\linewidth]{rbf.png}
+        \caption{}
+        \label{fig:my_label}
+    \end{figure}
+\end{multicols}
+
 
 \subsection{Ensamble}
 
@@ -323,33 +331,37 @@ Esistono tre tecniche differenti di ensamble:
     \item \textbf{stacking}: mentre nel bagging l'output era il risultato di una votazione, questa tecnica consente a un algoritmo di addestramento di raggruppare diverse altre previsioni di algoritmi di apprendimento simili.
 \end{itemize}
 
-Ho applicato questa la tecnica dell'ensamble all'algoritmo con i risultati migliori, e la previsione è incrementata di quasi l'1\%.
+Ho applicato questa la tecnica dell'ensamble all'algoritmo con i risultati migliori: gli alberi decisionali.
+L'algoritmo di ensamble degli alberi decisionali viene denominato \textbf{Random Forest}, che è un estensione del bagging. Questo algoritmo prende in esame n alberi diversi e, oltre a prendere un sottocampione diverso di dati per ogni albero, estrae anche le caratterstiche (attributi) in modo casuale, piuttosto che usare sempre tutte le caratteristiche per fare "crescere gli alberi".\hfill\break
+L'algoritmo prende quindi il nome di Random Forest (Foresta casuale) dato che si hanno molteplici alberi casuali.
+
+Utilizzando questa tecnica sull'algoritmo migliore, la previsione è incrementata di circa l'1\%.
 
 \subsection{Scelta indicatori}
-Per l'analisi delle prestazioni di un algoritmo è necessario tener conto degli indicatori in base a diversi fattori, sia al tipo di classificazione che al dataset. 
+Per l'analisi delle prestazioni di un algoritmo è necessario tener conto degli indicatori in base a diversi fattori, sia al tipo di classificazione che al dataset.
 Gli indicatori classici che solitamente si vanno ad osservare sono:
 \begin{itemize}
-    \item \textbf{accuracy}: indica il rapporto tra i valori corretti (sia positivi che negativi) sul totale dei sample 
+    \item \textbf{accuracy}: indica il rapporto tra i valori corretti (sia positivi che negativi) sul totale dei sample
     \begin{equation}
          accuracy = \frac{ TP+TN}{TP+FP+FN+TN}
     \end{equation}
-    
+
     \item \textbf{precision}: indica il rapporto tra le osservazioni positive correttamente predette e il totale delle osservazioni positive predette
     \begin{equation}
          precision = \frac{ TP}{TP+FP}
     \end{equation}
-    
+
     \item \textbf{recall}: indica il rapporto tra le osservazioni positive correttamente predette e tutte le osservazioni effettive della classe
     \begin{equation}
          recall = \frac{TP}{TP+FN}
     \end{equation}
-    
+
     \item \textbf{f1 score}: indica la media ponderata tra precision e recall e prende quindi in considerazione sia i falsi positivi che i falsi negativi
     \begin{equation}
          f1\_score = \frac{2*Recall * Precision}{Recall + Precision}
     \end{equation}
 \end{itemize}
-In una classificazione binaria, come in questo caso, quando il dataset non è uniforme, cioè il numero di sample delle due classi non è simile ma si discosta di molto l'uno dall'altro come in questo caso (60\% non spam, 40\% spam) è necessario fare delle osservazioni. 
+In una classificazione binaria, come in questo caso, quando il dataset non è uniforme, cioè il numero di sample delle due classi non è simile ma si discosta di molto l'uno dall'altro come in questo caso (60\% non spam, 40\% spam) è necessario fare delle osservazioni.
 
 Utilizzare l'accuracy sarebbe non totalmente corretto, perchè questo indice di misurazione è preciso solo se si sta lavorando con un dataset bilanciato (non è il caso in considerazione);
 eventualmente si potrebbe utilizzare l'\textit{accuracy per classe} che va ad indicare l'accuratezza della previsione per ogni classe.
@@ -358,23 +370,15 @@ Per questo progetto si è scelto di utilizzare come indice l'\textbf{f1-score}, 
 
 Di seguito vegono riportate le \textit{confusion matrix} per ogni algoritmo, che vanno a rappresentare graficamente il risultato di ogni classificatore binario.
 
-\begin{figure}[th]
-   \begin{minipage}{0.33\textwidth}
+
+\begin{figure}[H]
     \centering
-     \includegraphics[width=.9\linewidth]{confusion_tree.png}
-     \caption{}
-   \end{minipage}\hfill
-   \begin{minipage}{0.33\textwidth}
-    \centering
-     \includegraphics[width=.9\linewidth]{confusion_knn.png}
-     \caption{}
-   \end{minipage}
-   \begin{minipage}{0.33\textwidth}
-     \centering
-     \includegraphics[width=.9\linewidth]{confusion_svc.png}
-     \caption{}
-   \end{minipage}
+    \subfigure[]{\includegraphics[width=0.25\linewidth]{confusion_tree.png}}
+    \subfigure[]{\includegraphics[width=0.25\linewidth]{confusion_knn.png}}
+    \subfigure[]{\includegraphics[width=0.25\linewidth]{confusion_svc.png}}
+    \caption{}
 \end{figure}
+
 
 \clearpage
 \section{Risultati}
@@ -384,7 +388,7 @@ Tutti i parametri precedentemente utilizzati nei modelli sono stati scelti trami
 
 I sample, prima di essere stati utilizzati negli agoritmi, sono stati normalizzati, per migliorare di gran lunga le previsioni. Vegnono rappresentate tre tabelle contenenti gli indicatori: la prima utilizzando i dati "crudi" senza nessun tipo di preprocessamento o miglioria dei parametri dei modelli; la seconda con i dati normalizzati; e la terza con sia il preprocessamento dei dati che i parametri discussi nel capitolo precedente.
 
-Come si può velocemente notare, l'indicatore \textbf{f1-socre}, che come precendetemente discusso, è quello preso maggiormente in considerazione, grazie a queste migliorie riesce a perfezionarsi di quasi un 80\% nell'algoritmo con previsioni peggiori, mentre di poco più di un 2\% negli alberi decisionali dove ha mantenuto le predizioni migliori.
+Come si può velocemente notare dall'indicatore \textbf{f1-socre}, parametro maggiormente preso in considerazione, grazie a queste migliorie si riesce a perfezionare di quasi un 80\% l'algoritmo con previsioni peggiori, mentre di poco più di un 2\% negli alberi decisionali dove ha mantenuto le predizioni migliori.
 
 \begin{figure}[h]
     \centering
@@ -397,7 +401,7 @@ Come si può velocemente notare, l'indicatore \textbf{f1-socre}, che come precen
     \includegraphics[width=1\linewidth]{results_scaler.png}
     \caption{Sample normalizzati}
 \end{figure}
-    
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{results_optimized_all.png}
@@ -408,8 +412,8 @@ Da come è possibile notare dai grafici in figura 20 gli algoritmi attraverso qu
 \break
 \begin{figure}[H]
     \centering
-    \subfigure[]{\includegraphics[width=0.3\linewidth]{decision_tree_results.png}} 
-    \subfigure[]{\includegraphics[width=0.3\linewidth]{knn_results.png}} 
+    \subfigure[]{\includegraphics[width=0.3\linewidth]{decision_tree_results.png}}
+    \subfigure[]{\includegraphics[width=0.3\linewidth]{knn_results.png}}
     \subfigure[]{\includegraphics[width=0.3\linewidth]{svc_results.png}}
     \caption{}
 \end{figure}
@@ -432,51 +436,42 @@ Attraverso l'utilizzo di Fast Api, una libreria python, si è implementata un'in
 
 \begin{thebibliography}{9}
 \addcontentsline{toc}{section}{References}
-    \bibitem{} 
+    \bibitem{}
         Silvia Cascianelli,
         \textit{Video lezioni e dispense di Machine Learning}.
-    
-    \bibitem{} 
+
+    \bibitem{}
         Sito internet,
         \textit{it.wikipedia.org}
-    
-    \bibitem{} 
+
+    \bibitem{}
         Sito internet,
         \textit{stackexchange.com}
-    \bibitem{} 
+    \bibitem{}
         Sito internet,
         \textit{stackoverflow.com}
-    \bibitem{} 
+    \bibitem{}
         Sito internet,
         \textit{scikit-learn.org}
-    \bibitem{} 
-        Sito internet, 
+    \bibitem{}
+        Sito internet,
         \textit{blog.exsilio.com}
-    \bibitem{} 
-        Sito internet, 
+    \bibitem{}
+        Sito internet,
         \textit{knowledgehut.com}
-    \bibitem{} 
-        Sito internet, 
+    \bibitem{}
+        Sito internet,
         \textit{machinelearningmastery.com}
-    \bibitem{} 
-        Sito internet, 
+    \bibitem{}
+        Sito internet,
         \textit{machinecurve.com}
-    \bibitem{} 
-        Sito internet, 
+    \bibitem{}
+        Sito internet,
         \textit{lorenzogovoni.com}
-    \bibitem{} 
-        Sito internet, 
+    \bibitem{}
+        Sito internet,
         \textit{towardsdatascience.com}
-    
+
 \end{thebibliography}
 
 \end{document}
-
-
-
-
-
-
-
-
-
