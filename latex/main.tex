@@ -33,6 +33,7 @@
 
 \renewcommand{\contentsname}{Indice}
 \renewcommand\refname{Bibliografia}
+\renewcommand{\figurename}{Figura}
 \hypersetup{%
     pdfborder = {0 0 0}
 }
@@ -112,7 +113,7 @@ Per questo lavoro ho trovato necessario l'utilizzo di alcune librerie open-sourc
     \item \textbf{numpy}: libreria basata su python e c++ fondamentale per lavorare con array di grandi dimensioni. A differenza delle liste di python, numpy salva i dati in memoria in maniera contigua, l'accesso, incrementando notevolmente le performance, stimate al 5000\%;
     \begin{figure}[h]
         \includegraphics[width=1\linewidth]{numpy_vs_list.png}
-        \caption{}
+        \caption{Numpy vs liste python}
     \end{figure}
 
 \end{itemize}
@@ -121,15 +122,11 @@ Per questo lavoro ho trovato necessario l'utilizzo di alcune librerie open-sourc
 \subsection{Analisi inziale}
 Per prima cosa è necessario capire con che tipo di dati si andrà a lavorare, che siano numeri interi o decimali, stringhe o booleani, è fondamentale saperlo prima di cominciare l'analisi.
 Per fare ciò la libreria \textit{pandas} viene in supporto fornendo delle semplici funzioni ad-hoc, come\textbf{ \textit{pandas.info()}} che permette di ricavare il numero totale di righe e colonne, e per ogni attributo, specifica il tipo di dato della colonna.
-\begin{figure}[h]
-    \includegraphics[width=1\columnwidth]{pandas_info.png}
-    \caption{}
-\end{figure}
 Un'altra funzione utile è \textit{\textbf{pandas.describe()}} che per ogni colonna permette di ricavare dati come il numero di istanze non nulle, la media, la deviazione standard, il massimo e il minimo.
 
 \begin{figure}[h]
-    \includegraphics[width=1\columnwidth]{pandas_describe.png}
-    \caption{}
+    \includegraphics[width=1\columnwidth]{df_describe.png}
+    \caption{Descrizione dataframe (prime sei caratteristiche)}
 \end{figure}
 Il dataset è composto da 4601 istanze di email e 57 attributi rappresentati da un numero reale e un attributo classe rappresentato da un booleano che indica appunto se il sample è uno spam (1) o non spam (0).
 Il dataset spambase in questione non è bilanciato, difatti le classi spam e non spam corrispondono rispettivamente al 39.4\% e 60.6\% dei samples raccolti.
@@ -144,42 +141,38 @@ Il coefficiente di correlazione è un numero, compreso tra -1 e + 1 che esprime 
 \item == -1: i due attributi sono perfettamente decorrelati con una curva inversamente proporzionale, al crescere del primo il secondo decresce;
 \item == 0: i due attributi sono indipendenti l'uno dall'altro.
 \end{itemize}
- Si può notare dal grafico in figura 4 che la diagonale è composta da tutti 1, dato che un attributo messo in relazione con se stesso seguirà la stessa curva.
+ Si può notare dal grafico in figura 3 che la diagonale è composta da tutti 1, dato che un attributo messo in relazione con se stesso seguirà la stessa curva.
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{correlation_top_15.png}
-    \caption{}
+    \includegraphics[width=1\columnwidth]{correlation_top_15.png}
+    \caption{Correlazione dei primi 15 attributi più significativi}
 \end{figure}
 Il grafico di correlazione riesce a mettere in evidenza gli attributi più collegati con la classe (spam o non spam). In ordine, si notano le parole "your", "0000", "remove", "\$", "you", "free", "business", "hp", "capital\_run\_lenght\_total" (numero di lettere maiuscole), "our", "!", "receive", "hpl", "over".
 
 Raffigurati ci sono i primi 15 attributi più collegati alla classe spam, anche se non si nota una stretta coerelazione, dato che i valori si muovono tra 0.23 e 0.38.
 
-Si va quindi a restringere il campo per analizzare, sempre graficamente, la corrispondenza tra i cinque attributi più correlati. Si denota facilmente, dalla figura 5, che la parola "your" è più presente nelle email non spam, mentre le parole "000", "remove", "\$" e "you" sono nettamente più frequenti nelle email spam.
+Si va quindi a restringere il campo per analizzare, sempre graficamente, la corrispondenza tra i cinque attributi più correlati. Si denota facilmente, dal grafico in figura 4, che la parola "your" è più presente nelle email non spam, mentre le parole "000", "remove", "\$" e "you" sono nettamente più frequenti nelle email spam.
 
 \begin{figure}[H]
     \includegraphics[width=1\columnwidth]{correlation_pair_top_6.png}
-    \caption{}
+    \caption{Correlazione per classe dei primi 5 attributi}
 \end{figure}
 \clearpage
 \subsection{Comparazione parole}
 In questa sezione si andranno ad analizzare quali saranno le parole effettive da tenere maggiormente in considerazione tramite 3 grafici esplicativi.
 
 
-Il grafico in figura 6 rappresenta la percentuale della frequenza di ogni singola parola trovata nelle email che sono state poi selezionate come spam. In questo grafico non si tiene conto dell'influenza delle email non spam. Il grafico conferma le analisi svolte nei capitoli precedenti, questa volta calcolando solo l'impatto delle email non spam. Le due parole più inserite sono sempre "you" e "your".
+Il grafico in figura 5 rappresenta la percentuale della frequenza di ogni singola parola trovata nelle email che sono state poi selezionate come spam. In questo grafico non si tiene conto dell'influenza delle email non spam. Il grafico conferma le analisi svolte nei capitoli precedenti, questa volta calcolando solo l'impatto delle email non spam. Le due parole più inserite sono sempre "you" e "your".
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=.8\linewidth]{top_10_only_spam.png}
-    \caption{}
+    \caption{Parole più frequenti nelle mail spam}
 \end{figure}
 Per eseguire un'analisi più scrupolosa si va invece a calcolare la differenza delle frequenze tra le email non spam e le email spam.
-Per fare ciò è prima necessario creare una tabella pivot che calcoli, per entrambe le classi, la media di attributo, restituendo una tabella (figura 7) che abbia sulle ascisse le parole chiave e sulle ordinate la classe di appartenenza; i valori corrispondenti saranno la media delle frequenze della parola X nella rispettiva classe di appartenenza Y.
-\begin{figure}[H]
-    \includegraphics[width=1\linewidth]{pivot.png}
-    \caption{}
-\end{figure}
-Una volta calcolata la tabella pivot si notano immediatamente, dal grafico in figura 8, le parole che hanno un maggiore impatto sulla scelta della classe di appartenenza. In base al valore che ogni barra assume sulle y si determina che se:
+Per fare ciò è prima necessario creare una tabella pivot che calcoli, per entrambe le classi, la media di attributo, restituendo una tabella che abbia sulle ascisse le parole chiave e sulle ordinate la classe di appartenenza; i valori corrispondenti saranno la media delle frequenze della parola X nella rispettiva classe di appartenenza Y.
+Una volta calcolata la tabella pivot si notano immediatamente, dal grafico in figura 6, le parole che hanno un maggiore impatto sulla scelta della classe di appartenenza. In base al valore che ogni barra assume sulle y si determina che se:
 \begin{itemize}
     \item y == 0: la parola è equamente presente sia nelle email spam che non spam;
     \item y \textless  \! 0: la parola è maggiormente presente nelle email spam;
@@ -188,7 +181,7 @@ Una volta calcolata la tabella pivot si notano immediatamente, dal grafico in fi
 
 \begin{figure}[H]
     \includegraphics[width=1\columnwidth]{df_difference_barplot.png}
-    \caption{}
+    \caption{Differenza delle parole tra non spam e spam }
 \end{figure}
 
 Spiccano all'occhio, quindi, che le parole "you" e "your" sono nettamente più frequenti nelle email spam, mentre le parole come "george" e "hp" sono maggiormente più frequenti nelle email vere. Questo perchè spesso, il malintenzionato che spedisce la mail malevola, non conosce il nome delle proprie vittime e si rivolge a loro con il pronome "you" ("tu", in inglese), piuttosto che con il loro vero nome.
@@ -200,16 +193,17 @@ Nel dataset, oltre alla frequenza delle singole parole, sono presenti tre campi 
     \item capital\_run\_length\_total: indica la somma totale delle lettere maiuscole.
 \end{itemize}
 
-Analizzando questi tre fattori presenti all'interno della email, si deduce, leggendo il grafico a figura 9 con le stesse valutazioni del grafico a figura 8, che nelle email spam è nettamente maggiore il numero di lettere maiuscole inserite, che nelle email non spam.
+Analizzando questi tre fattori presenti all'interno della email, si deduce, leggendo il grafico a figura 7 con le stesse valutazioni del grafico a figura 8, che nelle email spam è nettamente maggiore il numero di lettere maiuscole inserite, che nelle email non spam.
 Il malintenzionato preferisce, quindi, utilizzare le lettere maiuscole per carpire l'attenzione della vittima.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.9\columnwidth]{capital_plot.png}
-    \caption{}
+    \includegraphics[width=.7\columnwidth]{capital_plot.png}
+    \caption{Differenza impatto lettere maiuscole tra mail non spam e spam }
 \end{figure}
+
 \clearpage
-\section{Discussione dei modelli}
+\section{Discussione modelli e dettagli implementativi}
 In questo capitolo si andranno ad analizzare gli algoritmi utilizzati per prevedere la  natura di una mail.
 
 Il problema in questione fa chiaramente riferimento ad un modello di classificazione binaria, poichè ogni sample è rappresentato da un numero intero e può assumere solamente due valori:
@@ -217,11 +211,27 @@ Il problema in questione fa chiaramente riferimento ad un modello di classificaz
     \item 0: non spam;
     \item 1: spam.
 \end{itemize}
-Per questo progetto ho selezionato, tra gli algoritmi svolti durante le lezioni, tre che ho reputato più adatti per il riconoscimento, che si andranno ad esaminare più approfonditamente nelle prossime sezioni:
+
+Il dataset è stato valutato sia prima che dopo il ridimensionamento dei dati.
+Il ridimensionamento permette di uguagliare le caratteristiche al fine di poterle comparare su uno stesso livello di importanza.
+Per questo progetto si è utilizzata la standardizzazione, che ridistribuisce le caratteristiche in modo da avere la media
+\(\mu = 0 \)
+e deviazione standard:
+\(\sigma = 1 \)
+
+
+
+\begin{equation}
+    x' = \frac{x-\mu}{\sigma}
+\end{equation}
+
+Ad ogni algoritmo sono stati associati degli iperparameteri che meglio si adattano al dataset per migliorarne le previsioni. Per calcolare la combinazione migliore di questi iperparametri si è utilizzato un metodo ricerca a griglia che computa tutte le combinazioni tra una serie di parametri diversi ed esegue la previsione con l'algoritmo in questione. L'obiettivo di questa funzione è appunto calcolare tutte le combinazioni possibili e trovare gli iperparametri migliori da utilizzare in fase di allenamento e di test.
+\break\break
+Per questo progetto sono stati selezionati, tra gli algoritmi svolti durante le lezioni, tre che si andranno ad esaminare più approfonditamente nelle prossime sezioni:
 \begin{itemize}
     \item K-Nearest Neighbors;
     \item Alberi decisionali;
-    \item Support Vector Machine (SVM)
+    \item Support Vector Machine.
 \end{itemize}
 
 \clearpage
@@ -232,7 +242,7 @@ In questo tipo di classificazione, il risultato è l'appartenenza ad una certa c
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.07]{KnnClassification.png}
-    \caption{}
+    \caption{Esempio di classificazione K-Nearest Neighbors}
 \end{figure}
 
 Questo algoritmo, quindi descrive la similarità tra i diversi sample, in base al numero di vicini che vengono presi in considerazione. Per esempio, per prevedere la classe della pallina verde in figura 10 la scelta di un k diverso cambia il risultato:
@@ -260,7 +270,7 @@ Con alberi decisionali s'intende l'implementazione degli alberi binari, composti
 \begin{figure}[h]
     \centering
     \includegraphics[width=.5\columnwidth]{decision_tree.png}
-    \caption{}
+    \caption{Esempio di classificazione ad alberi decisionali}
 \end{figure}
 Una regola di suddivione è necessaria per decidere quale (o quali) variabile deve essere utilizzata nella condizione di un nodo per dividere il set di dati in sttogruppi, e soprattutto quale soglia utilizzare sulle variabili. Il metodo con cui vengono effettuate queste suddivisioni è basato sull'impurità dei nodi.
 
@@ -296,9 +306,9 @@ Si definiscono
 
 \begin{figure}[H]
     \centering
-    \subfigure[]{\includegraphics[width=0.48\linewidth]{svc.png}}
-    \subfigure[]{\includegraphics[width=0.48\linewidth]{svc_margin.png}}
-    \caption{}
+    \subfigure[esempio di possibili linee per separare i dati]{\includegraphics[width=0.48\linewidth]{svc.png}}
+    \subfigure[vettori di supporto e margine]{\includegraphics[width=0.48\linewidth]{svc_margin.png}}
+    \caption{Esempio di classificazione svm}
 \end{figure}
 
 
@@ -315,8 +325,7 @@ L'algoritmo quindi disegna un numero n di linee per separare le palline blu da q
     \begin{figure}[H]
         \centering
         \includegraphics[width=1\linewidth]{rbf.png}
-        \caption{}
-        \label{fig:my_label}
+        \caption{Esempio di utilizzo kernel rbf}
     \end{figure}
 \end{multicols}
 
@@ -370,13 +379,12 @@ Per questo progetto si è scelto di utilizzare come indice l'\textbf{f1-score}, 
 
 Di seguito vegono riportate le \textit{confusion matrix} per ogni algoritmo, che vanno a rappresentare graficamente il risultato di ogni classificatore binario.
 
-
 \begin{figure}[H]
     \centering
-    \subfigure[]{\includegraphics[width=0.25\linewidth]{confusion_tree.png}}
-    \subfigure[]{\includegraphics[width=0.25\linewidth]{confusion_knn.png}}
-    \subfigure[]{\includegraphics[width=0.25\linewidth]{confusion_svc.png}}
-    \caption{}
+    \subfigure[alberi decisionali]{\includegraphics[width=0.25\linewidth]{confusion_tree.png}}
+    \subfigure[k-nearest neighbors]{\includegraphics[width=0.25\linewidth]{confusion_knn.png}}
+    \subfigure[svm]{\includegraphics[width=0.25\linewidth]{confusion_svc.png}}
+    \caption{Confusion matrix relative ai tre algoritmi}
 \end{figure}
 
 
@@ -384,38 +392,39 @@ Di seguito vegono riportate le \textit{confusion matrix} per ogni algoritmo, che
 \section{Risultati}
 In questa sezione vengono esposti i risultati raggiunti e come poter facilmente testare il funzionamento dell'algoritmo.
 
-Tutti i parametri precedentemente utilizzati nei modelli sono stati scelti tramite una \textit{cross validation} a griglia. Sklearn dispone di una funzione chiamata \textit{GridSearchCV} che esegue la previsione con lo stesso algoritmo, ma con diversi parametri (precedentemente impostati dall'utente) e calcola la combinazione di parametri che \textbf{meglio si adatta al dataset}. Questi metodi hanno un tempo di esecuzione ed un costo computazionale solitamente alto, motivo per il quale una volta calcolati, sono stati salvati nel codice, o come si dice nel gergo informatico, sono \textit{"hard-coded"}.
+
 
 I sample, prima di essere stati utilizzati negli agoritmi, sono stati normalizzati, per migliorare di gran lunga le previsioni. Vegnono rappresentate tre tabelle contenenti gli indicatori: la prima utilizzando i dati "crudi" senza nessun tipo di preprocessamento o miglioria dei parametri dei modelli; la seconda con i dati normalizzati; e la terza con sia il preprocessamento dei dati che i parametri discussi nel capitolo precedente.
 
 Come si può velocemente notare dall'indicatore \textbf{f1-socre}, parametro maggiormente preso in considerazione, grazie a queste migliorie si riesce a perfezionare di quasi un 80\% l'algoritmo con previsioni peggiori, mentre di poco più di un 2\% negli alberi decisionali dove ha mantenuto le predizioni migliori.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{results_nothing.png}
+    \includegraphics[width=1\linewidth]{results_0.png}
     \caption{Sample senza ottimizzazioni}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{results_scaler.png}
-    \caption{Sample normalizzati}
+    \includegraphics[width=1\linewidth]{results_1.png}
+    \caption{Sample ridimensionamenti}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{results_optimized_all.png}
-    \caption{Sample normalizzati e perfezionamento parametri}
+    \includegraphics[width=1\linewidth]{results_2.png}
+    \caption{Sample ridimensionamenti e utilizzo iperparametri}
 \end{figure}
 
-Da come è possibile notare dai grafici in figura 20 gli algoritmi attraverso queste ottimizzazioni hanno migliorato decisamente le previsioni della classe di appartenenza dell'email.
+Da come è possibile notare dai grafici in figura 16 gli algoritmi attraverso queste ottimizzazioni hanno migliorato decisamente le previsioni della classe di appartenenza dell'email.
+
 \break
 \begin{figure}[H]
     \centering
-    \subfigure[]{\includegraphics[width=0.3\linewidth]{decision_tree_results.png}}
-    \subfigure[]{\includegraphics[width=0.3\linewidth]{knn_results.png}}
-    \subfigure[]{\includegraphics[width=0.3\linewidth]{svc_results.png}}
-    \caption{}
+    \subfigure[alberi decisionali]{\includegraphics[width=0.3\linewidth]{decision_tree_results.png}}
+    \subfigure[k-nearest neighbors]{\includegraphics[width=0.3\linewidth]{knn_results.png}}
+    \subfigure[svm]{\includegraphics[width=0.3\linewidth]{svc_results.png}}
+    \caption{Migliorie relative ai tre algoritmi}
 \end{figure}
 
 
@@ -423,16 +432,13 @@ Da come è possibile notare dai grafici in figura 20 gli algoritmi attraverso qu
 Attraverso l'utilizzo di Fast Api, una libreria python, si è implementata un'interfaccia grafica, facilmente raggiungibile tramite un browser, che permette di testare velocemente il corretto funzionamento del progetto.
 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\columnwidth]{api_false.png}
-    \caption{Non spam}
+    \caption{Esempio utilizzo non spam}
 \end{figure}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\columnwidth]{api_true.png}
-    \caption{Spam}
-\end{figure}
+
+\clearpage
 
 \begin{thebibliography}{9}
 \addcontentsline{toc}{section}{References}
